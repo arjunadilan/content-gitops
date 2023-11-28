@@ -1,4 +1,4 @@
-FROM python:3-alpine
+FROM python:3.9.18-slim-bullseye
 COPY . /python
 WORKDIR /python
 RUN pip install -r requirements.txt
