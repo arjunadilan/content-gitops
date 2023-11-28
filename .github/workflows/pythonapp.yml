@@ -1,28 +1,21 @@
-name: Python application
+name: Docker Image CI
 
 on:
   push:
-    branches:
-      - main
-      
+    paths:
+    - 'python/*'
+
 jobs:
-  build-and-push:
+
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check Out Repo
-      uses: actions/checkout@v2
-
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: arjunadilan
-        password: ${{ secrets.DOCKERPW }}
-
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: /python
-        file: /python/Dockerfile
-        push: true
-        tags: arjunadilan/gitops:hellov1.0
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: |
+        cd ./python
+        echo "${{ secrets.DOCKERPW }}" | docker login -u "arjunadilan" --password-stdin
+        docker image build -t arjunadilan/gitops:hellov1.0 .
+        docker push arjunadilan/gitops:hellov1.0
