@@ -1,7 +1,7 @@
 name: Docker Image CI
 
 on:
-  push:
+  pull_request:
     paths:
     - 'python/*'
 
@@ -17,5 +17,5 @@ jobs:
       run: |
         cd ./python
         echo "${{ secrets.DOCKERPW }}" | docker login -u "arjunadilan" --password-stdin
-        docker image build -t arjunadilan/gitops:hellov1.0 .
-        docker push arjunadilan/gitops:hellov1.0
+        docker image build -t arjunadilan/gitops:hellov1.2.2 .
+        docker push arjunadilan/gitops:hellov1.2.2
